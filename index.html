@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprends les Notes ! (Grande Portée)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="app-container">
+        <h1>🎵 Apprends les Notes ! 🎶</h1>
+        <div id="score-container">
+            <!-- Clé de Sol -->
+            <div id="cle-sol" class="cle">𝄞</div>
+            <div class="portee-sol">
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+            </div>
+
+            <!-- Clé de Fa -->
+            <div id="cle-fa" class="cle">𝄢</div>
+            <div class="portee-fa">
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+            </div>
+
+            <!-- La note -->
+            <div id="note-aleatoire"></div>
+
+            <!-- Guide visuel du Do milieu (optionnel, mis en arrière-plan) -->
+            <div id="middle-c-guide"></div>
+        </div>
+
+        <div id="status-message">Cliquez sur NOUVELLE NOTE pour commencer !</div>
+
+        <div id="controls">
+            <div id="note-buttons">
+                <!-- Les boutons sont générés par JS -->
+            </div>
+            <button id="new-note-btn">NOUVELLE NOTE</button>
+        </div>
+
+        <div id="score-display">Score: <span id="score">0</span> / <span id="total">0</span></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
