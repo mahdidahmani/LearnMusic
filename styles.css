@@ -1,0 +1,262 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#app-container {
+    background-color: #34495e;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+}
+
+h1 {
+    color: #bb86fc;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* --- Portée Musicale --- */
+#score-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    height: 500px;
+    /* Hauteur fixe importante pour la précision */
+    margin: 40px auto;
+    border: 2px solid #555;
+    border-radius: 10px;
+    background-color: #222;
+    overflow: hidden;
+}
+
+/* 
+   CALCUL DE GÉOMÉTRIE :
+   1 "Pas" (écart ligne/interligne) = 4% de la hauteur totale (20px).
+   Une portée fait 5 lignes, donc 4 espaces complets = 8 Pas.
+   Hauteur d'une portée = 8 * 4% = 32%.
+   
+   Centre (Do milieu) = 50%.
+   Bas de la portée Sol (Mi) = 2 pas au-dessus du Do = 50% - (2*4%) = 42%.
+   Haut de la portée Sol (Fa) = 50% - (10*4%) = 10%.
+   
+   Haut de la portée Fa (La) = 2 pas en-dessous du Do = 50% + (2*4%) = 58%.
+*/
+
+.portee-sol,
+.portee-fa {
+    position: absolute;
+    width: 85%;
+    left: 10%;
+    height: 32%;
+    /* Correspond exactement à 8 "pas" */
+    /* border: 1px dashed rgba(255,255,255,0.1); Pour debug */
+}
+
+.portee-sol {
+    top: 10%;
+}
+
+.portee-fa {
+    top: 58%;
+}
+
+.ligne {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #bbb;
+    left: 0;
+}
+
+/* Les 5 lignes sont réparties uniformément dans les 32% de hauteur */
+.portee-sol .ligne:nth-child(1),
+.portee-fa .ligne:nth-child(1) {
+    top: 0%;
+}
+
+/* Haut */
+.portee-sol .ligne:nth-child(2),
+.portee-fa .ligne:nth-child(2) {
+    top: 25%;
+}
+
+.portee-sol .ligne:nth-child(3),
+.portee-fa .ligne:nth-child(3) {
+    top: 50%;
+}
+
+.portee-sol .ligne:nth-child(4),
+.portee-fa .ligne:nth-child(4) {
+    top: 75%;
+}
+
+.portee-sol .ligne:nth-child(5),
+.portee-fa .ligne:nth-child(5) {
+    top: 100%;
+}
+
+/* Bas */
+
+/* --- Clés --- */
+.cle {
+    position: absolute;
+    font-family: 'Times New Roman', serif;
+    /* Plus joli pour les symboles */
+    color: #eee;
+    line-height: 1;
+}
+
+#cle-sol {
+    font-size: 7.5em;
+    left: 10%;
+    top: 18%;
+    /* Ajusté visuellement pour la nouvelle grille */
+}
+
+#cle-fa {
+    font-size: 5em;
+    left: 10%;
+    top: 60%;
+    /* Ajusté visuellement */
+}
+
+/* --- Guide Do Milieu (discret) --- */
+#middle-c-guide {
+    position: absolute;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    top: 50%;
+    left: 10%;
+    width: 85%;
+    border-top: 1px dashed #666;
+}
+
+/* --- Note Aléatoire --- */
+#note-aleatoire {
+    position: absolute;
+    left: 50%;
+    /* Centré horizontalement */
+    width: 26px;
+    /* Un peu plus large pour l'esthétique */
+    height: 18px;
+    /* Doit être un peu plus petit que les 20px (4%) du pas */
+    background-color: #eee;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    /* Le centre de la div est le point de référence */
+    display: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    z-index: 10;
+}
+
+/* Ligne supplémentaire sur la note (ex: Do milieu) */
+.ligne-note {
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    background-color: #eee;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* --- Contrôles et Boutons --- */
+#controls {
+    margin-top: 30px;
+}
+
+#note-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+#note-buttons button {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    min-width: 50px;
+}
+
+#new-note-btn {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#new-note-btn:hover {
+    background-color: #218838;
+}
+
+/* Couleurs des boutons (Code inchangé mais fiable) */
+.btn-C {
+    background-color: #e74c3c;
+}
+
+.btn-D {
+    background-color: #f1c40f;
+    color: #333 !important;
+}
+
+.btn-E {
+    background-color: #2ecc71;
+}
+
+.btn-F {
+    background-color: #3498db;
+}
+
+.btn-G {
+    background-color: #e67e22;
+}
+
+.btn-A {
+    background-color: #9b59b6;
+}
+
+.btn-B {
+    background-color: #1abc9c;
+}
+
+/* Messages */
+#status-message {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    min-height: 1.5em;
+}
+
+.correct {
+    color: #2ecc71;
+}
+
+.incorrect {
+    color: #e74c3c;
+}
+
+#score-display {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #bdc3c7;
+}
